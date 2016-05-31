@@ -1,0 +1,43 @@
+{
+  "name": "zmsoap",
+  "version": "1.0.0",
+  "description": "Nodejs client library for Zimbra SOAP API.",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gabrizo/zmsoap.git"
+  },
+  "keywords": [
+    "Zimbra",
+    "zimbraAdmin",
+    "zimbraAccount",
+    "zimbraMail",
+    "Mail",
+    "node",
+    "soap"
+  ],
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "author": "Christian Gabara <gabara.christian@gmail.com> (https://github.com/gabrizo)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gabrizo/zmsoap/issues"
+  },
+  "homepage": "https://github.com/gabrizo/zmsoap#readme",
+  "devDependencies": {
+    "babel-core": "6.9.1",
+    "babel-loader": "6.2.4",
+    "babel-preset-es2015": "6.9.0",
+    "babel-preset-stage-2": "6.5.0",
+    "webpack": "1.13.1"
+  },
+  "dependencies": {
+    "babel-polyfill": "6.9.1"
+  }
+}

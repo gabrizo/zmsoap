@@ -48,7 +48,12 @@
   "dependencies": {
     "babel-polyfill": "6.9.1"
   },
-  "czConfig": {
-    "path": "node_modules/cz-conventional-changelog"
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-conventional-changelog"
+    },
+    "ghooks": {
+      "pre-commit": "npm run test:single"
+    }
   }
 }

@@ -7,6 +7,7 @@ chai.use(charAsPromised);
 const hostname = 'localhost';
 const username = 'admin@zimbra.breezy.net';
 const password = 'password';
+let zimbraAdmin;
 
 describe('Admin', () => {
   describe('Dummy tests', () => {
@@ -42,5 +43,77 @@ describe('Admin', () => {
       const res = Admin.getAuthToken(hostname, username, password);
       return expect(res).to.eventually.be.a('string');
     });
-  })
+  });
+
+  describe('instance methods', () => {
+    before((done) => {
+      let authToken;
+      Admin.getAuthToken(hostname, username, password)
+      .then((authToken) => {
+        zimbraAdmin = new Admin(hostname, authToken);
+        done();
+      });
+      //handle reject here
+    });
+
+    it('zimbraAdmin should be an instance of Admin', () => {
+      expect(zimbraAdmin).to.be.an.instanceof(Admin);
+    });
+
+    describe('getDomain', () => {
+      it('should return a domain object', () => {
+        const res = zimbraAdmin.getDomain(username.split("@")[1]);
+        return expect(res).to.eventually.be.a('object');
+      });
+    });//getDomain
+
+    describe('createDomain', () => {
+      it('should throw undefined when domain is not provided', () => {
+        const res = zimbraAdmin.createDomain();
+
+        return expect(res).to.rejectedWith('domain undefined');
+      });
+      it('should create a new domain', () => {
+        const res = zimbraAdmin.createDomain("gabrizo.example.com");
+        return expect(res).to.eventually.be.a('object');
+      });
+      it('should take an object domain attributes', () => {
+        const domainAttrs = {
+          description: "Super Domain",
+          "zimbraNotes": "Some notes about the domain"
+        };
+        const res = zimbraAdmin.createDomain("zmsoap.example.com", domainAttrs);
+        return expect(res).to.eventually.be.a('object');
+      });
+    }); //createDomain
+
+    describe('modifyDomain()', () => {
+      it('should update the domain', () => {
+        const domainAttrs = {
+          zimbraNotes: `updated at - ${new Date()}`,
+          description: `description - ${new Date()}`
+        }
+        const res = zimbraAdmin.modifyDomain(username.split("@")[1], domainAttrs);
+        return expect(res).to.eventually.be.a('object');
+      })
+    }); //modifyDomain
+
+    describe('deleteDomain', () => {
+      it('should delete the domain', () => {
+        const response = { _jsns: 'urn:zimbraAdmin' };
+        const res = zimbraAdmin.deleteDomain('zmsoap.example.com');
+        return expect(res).to.eventually.deep.equal(response);
+      })
+      it('should delete the domain because our tests have created it', () => {
+        const response = { _jsns: 'urn:zimbraAdmin' };
+        const res = zimbraAdmin.deleteDomain('gabrizo.example.com');
+        return expect(res).to.eventually.deep.equal(response);
+      });
+    }); //deleteDomain
+
+
+  });
 });
+
+
+// t

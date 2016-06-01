@@ -3,6 +3,9 @@ language: node_js
 cache:
   directories:
     - node_modules
+branches:
+  only:
+    - master
 notifications:
   email: false
 node_js:
@@ -17,7 +20,9 @@ before_install:
 before_script:
   - npm prune
 script:
-  - npm run test:single
+  - npm run cover
+  - npm run check-coverage
+  - npm run build
 after_success:
   - 'curl -Lo travis_after_all.py https://git.io/travis_after_all'
   - python travis_after_all.py

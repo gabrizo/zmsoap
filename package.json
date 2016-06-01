@@ -4,9 +4,12 @@
   "description": "Nodejs client library for Zimbra SOAP API.",
   "main": "dist/index.js",
   "scripts": {
-    "test": "mocha --compilers js:babel-core/register ./tests/**/* -w",
-    "test:single": "mocha --compilers js:babel-core/register ./tests/**/* ",
+    "watch:test": "npm run test -- -w",
+    "test": "mocha --compilers js:babel-core/register ./tests/**/*",
+    "test:single": "nyc cover -x *.spec.js _mocha -- -R spec tests/unit/* ",
+    "cover": "nyc npm t",
     "build": "webpack",
+    "check-coverage": "nyc check-coverage --statements 100 --branches 100 --functions 100 --lines",
     "commit": "git-cz",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
@@ -41,6 +44,7 @@
     "chai": "3.5.0",
     "commitizen": "2.8.1",
     "cz-conventional-changelog": "1.1.6",
+    "istanbul": "0.4.3",
     "mocha": "2.5.3",
     "semantic-release": "^4.3.5",
     "webpack": "1.13.1"
@@ -53,7 +57,7 @@
       "path": "node_modules/cz-conventional-changelog"
     },
     "ghooks": {
-      "pre-commit": "npm run test:single"
+      "pre-commit": "npm run cover && npm run check-coverage"
     }
   }
 }

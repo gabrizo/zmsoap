@@ -65,6 +65,10 @@ describe('Admin', () => {
         const res = zimbraAdmin.getDomain(username.split("@")[1]);
         return expect(res).to.eventually.be.a('object');
       });
+      it('should throw error if the domain does not exist', () => {
+        const res = zimbraAdmin.getDomain('dummy-domain.net');
+        return expect(res).to.rejected;
+      })
     });//getDomain
 
     describe('createDomain', () => {
@@ -95,7 +99,15 @@ describe('Admin', () => {
         }
         const res = zimbraAdmin.modifyDomain(username.split("@")[1], domainAttrs);
         return expect(res).to.eventually.be.a('object');
-      })
+      });
+      it('should rejected if domain does not exist', () => {
+        const domainAttrs = {
+          zimbraNotes: `updated at - ${new Date()}`,
+          description: `description - ${new Date()}`
+        }
+        const res = zimbraAdmin.modifyDomain("bad-domain.com", domainAttrs);
+        return expect(res).to.rejected;
+      });
     }); //modifyDomain
 
     describe('deleteDomain', () => {
@@ -109,6 +121,10 @@ describe('Admin', () => {
         const res = zimbraAdmin.deleteDomain('gabrizo.example.com');
         return expect(res).to.eventually.deep.equal(response);
       });
+      it('should be rejected if the domain does not exist', () => {
+        const res = zimbraAdmin.deleteDomain('dummy-domain-delete.com');
+        return expect(res).to.be.rejected;
+      })
     }); //deleteDomain
 
 

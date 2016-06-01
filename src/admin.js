@@ -38,9 +38,9 @@ export default class Admin {
         .then((result) => {
           resolve(result)
         })
-        .catch((error) => reject(error))
+        // .catch((error) => reject(error))
       })
-      .catch((error) => resolve(error))
+      .catch((error) => reject(error))
 
 
     })
@@ -96,7 +96,7 @@ export default class Admin {
         const body = soapEnvelope(requestObject, this.authToken);
         zimbraRequest(body, this.uri, 'ModifyDomainResponse')
         .then((result) => resolve(result))
-        .catch((error) => reject(error))
+        // .catch((error) => reject(error))
       })
     .catch((err) => reject(err))
     });

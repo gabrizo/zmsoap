@@ -1,5 +1,4 @@
 import { soapEnvelope, zimbraRequest } from './helpers';
-import rp from 'request-promise';
 
 export default class Admin {
 
